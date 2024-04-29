@@ -27,6 +27,11 @@ export const sendMessage = async (req, res) => {
             conversation.messages.push(newMessage._id);
         }
 
+        // await conversation.save();
+        // await newMessage.save();
+        // instead of the 2 await above, do the below to be faster
+        await Promise.all([conversation.save(), newMessage.save()])
+
         res.status(201).json({newMessage});
 
     } catch (error) {
